@@ -1,7 +1,7 @@
 const fb = require('express').Router();
 const fs = require('fs');
-const uuid = require('./uuid.js');
-const db = require('./db/db.json');
+const uuid = require('../uuid');
+const db = require('../db/db.json');
 
 
 fb.get('/api/notes', (req, res) => {
