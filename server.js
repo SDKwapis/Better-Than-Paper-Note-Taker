@@ -105,8 +105,8 @@ app.post('/api/notes', (req, res) => {
 });
 
 app.delete('/api/notes/:id', (req, res) => {
-  const { id } = req.params;
-  console.log(`DELETE request received for /api/notes/${id}`);
+  const { note_id } = req.params;
+  console.log(`DELETE request received for /api/notes/${note_id}`);
 
   fs.readFile(dbPath, 'utf8', (err, data) => {
     if (err) {
@@ -114,7 +114,7 @@ app.delete('/api/notes/:id', (req, res) => {
       res.status(500).json({ error: 'Failed to read db.json' });
     } else {
       let noteArray = JSON.parse(data);
-      noteArray = noteArray.filter(note => note.note_id !== id);
+      noteArray = noteArray.filter(note => note.note_id !== note_id);
       console.log('Updated note array after delete:', noteArray);
 
       fs.writeFile(dbPath, JSON.stringify(noteArray, null, 4), (writeErr) => {
@@ -127,6 +127,19 @@ app.delete('/api/notes/:id', (req, res) => {
         }
       });
     }
+  });
+});
+
+app.get('/notes/:id', (req, res) => {
+  const noteId = req.params.id;
+  Note.findById(noteId, (err, note) => {
+      if (err) {
+          return res.status(500).send(err);
+      }
+      if (!note) {
+          return res.status(404).send('Note not found');
+      }
+      res.json(note);
   });
 });
 
