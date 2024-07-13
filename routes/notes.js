@@ -1,53 +1,85 @@
-const fb = require('express').Router();
-const fs = require('fs');
-const uuid = require('../uuid');
-const db = require('../db/db.json');
+// const express = require('express');
+// const fb = express.Router();
+// const fs = require('fs');
+// const path = require('path');
+// const uuid = require('../uuid');
+
+// const dbPath = path.join(__dirname, '../db/db.json');
+
+// const getNotes = (req, res) => {
+//   fs.readFile(dbPath, 'utf8', (err, data) => {
+//     if (err) {
+//       console.error(err);
+//       res.status(500).json({ error: 'Failed to read db.json' });
+//     } else {
+//       res.json(JSON.parse(data));
+//     }
+//   });
+// };
+
+// const addNote = (req, res) => {
+//   console.info(`${req.method} request to add new note received!`);
+//   const { title, text } = req.body;
+
+//   if (title && text) {
+//     const newNote = {
+//       title,
+//       text,
+//       note_id: uuid(),
+//     };
+
+//     fs.readFile(dbPath, 'utf8', (err, data) => {
+//       if (err) {
+//         console.error(err);
+//         res.status(500).json({ error: 'Failed to read db.json' });
+//       } else {
+//         const noteArray = JSON.parse(data);
+//         noteArray.push(newNote);
+
+//         fs.writeFile(dbPath, JSON.stringify(noteArray, null, 4), (writeErr) => {
+//           if (writeErr) {
+//             console.error(writeErr);
+//             res.status(500).json({ error: 'Failed to update db.json' });
+//           } else {
+//             console.info('Successfully updated db.json!');
+//             res.status(201).json(newNote);
+//           }
+//         });
+//       }
+//     });
+//   } else {
+//     res.status(400).json({ error: 'Missing title or text in request body' });
+//   }
+// };
+
+// const deleteNote = (req, res) => {
+//   const { id } = req.params;
+
+//   fs.readFile(dbPath, 'utf8', (err, data) => {
+//     if (err) {
+//       console.error(err);
+//       res.status(500).json({ error: 'Failed to read db.json' });
+//     } else {
+//       let noteArray = JSON.parse(data);
+//       noteArray = noteArray.filter(note => note.note_id !== id);
+
+//       fs.writeFile(dbPath, JSON.stringify(noteArray, null, 4), (writeErr) => {
+//         if (writeErr) {
+//           console.error(writeErr);
+//           res.status(500).json({ error: 'Failed to update db.json' });
+//         } else {
+//           console.info('Successfully updated db.json!');
+//           res.status(200).json({ message: 'Note deleted successfully' });
+//         }
+//       });
+//     }
+//   });
+// };
+
+// fb.get('/notes', getNotes);
+// fb.post('/notes', addNote);
+// fb.delete('/notes/:id', deleteNote);
+
+// module.exports = fb;
 
 
-fb.get('/api/notes', (req, res) => {
-    return res.json(db);
-  });
-  
-  fb.post('/api/notes', (req, res) => {
-    console.info(`${req.method} request to add new note received!`);
-    const { title, text } = req.body;
-  
-    if (title && text) {
-      const newNote = {
-        title,
-        text,
-        note_id: uuid(),
-      };
-  
-      fs.readFile('./db/db.json', 'utf8', (err, data) => {
-        if (err) {
-          console.error(err);
-        } else {
-      
-          const noteString = JSON.parse(data);
-  
-          noteString.push(newNote);
-  
-          fs.writeFile(
-            './db/db.json',
-            JSON.stringify(noteString, null, 4),
-            (writeErr) =>
-              writeErr
-                ? console.error(writeErr)
-                : console.info('Successfully updated db.json!')
-          );
-        }
-      });
-  
-      const response = {
-        status: 'success',
-        body: newNote,
-      };
-      console.log(response);
-      res.status(201).json(response);
-    } else {
-      res.status(500).json('Error posting new note');
-    }
-  });
-
-  module.exports = fb;
