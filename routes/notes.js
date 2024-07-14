@@ -6,6 +6,7 @@ const uuid = require('../uuid');
 
 const dbPath = path.join(__dirname, '../db/db.json');
 
+// function to get the array of note objects from the db.json file and make them available to be displayed on the site
 const getNotes = (req, res) => {
   fs.readFile(dbPath, 'utf8', (err, data) => {
     if (err) {
@@ -17,6 +18,7 @@ const getNotes = (req, res) => {
   });
 };
 
+// function to add a new note to the db.json file
 const addNote = (req, res) => {
   console.info(`${req.method} request to add new note received!`);
   const { title, text } = req.body;
@@ -52,6 +54,7 @@ const addNote = (req, res) => {
   }
 };
 
+// function to delete a note by its' id from the db.json file
 const deleteNote = (req, res) => {
   const { id } = req.params;
 
@@ -76,6 +79,7 @@ const deleteNote = (req, res) => {
   });
 };
 
+// defines the routes for each function
 router.get('/', getNotes);
 router.post('/', addNote);
 router.delete('/:id', deleteNote);

@@ -1,10 +1,5 @@
 [
     {
-        "title": "test another~!",
-        "text": "another test",
-        "id": "a0ab"
-    },
-    {
         "title": "new note yo!",
         "text": "weeeeeeee",
         "id": "843f"
@@ -15,13 +10,13 @@
         "id": "6ad3"
     },
     {
-        "title": "Time to go",
-        "text": "Back to the future",
-        "id": "dbc2"
-    },
-    {
         "title": "It works!!",
         "text": "it works it works it works it works it works!!!",
         "id": "d712"
+    },
+    {
+        "title": "Another one",
+        "text": "DJ Khaled",
+        "id": "e0db"
     }
 ]
